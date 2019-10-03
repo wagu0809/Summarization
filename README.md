@@ -25,7 +25,7 @@ Each [CLS] token collects the feature of the sentence next to it.
 Some summarization results of other works:
 (http://nlpprogress.com/english/summarization.html)
 
-References:
+## References:
 
 Devlin J, Chang MW, Lee K, Toutanova K. Bert: Pre-training of deep bidirectional transformers for language understanding. arXiv preprint arXiv:1810.04805. 2018 Oct 11.
 
