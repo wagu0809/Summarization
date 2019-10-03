@@ -13,5 +13,8 @@ in ./model, checkpoints saved during training
 
 in ./logs, train_log, validate_log and test_log are saved
 
-Data description:
+Pre-processed data(https://drive.google.com/open?id=1DN7ClZCCXsk2KegmC6t4ClBwtAf5galI)
+
+
+
 
