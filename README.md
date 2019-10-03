@@ -40,3 +40,5 @@ Lin CY. Rouge: A package for automatic evaluation of summaries. InText summariza
 Ba JL, Kiros JR, Hinton GE. Layer normalization. arXiv preprint arXiv:1607.06450. 2016 Jul 21.
 
 Zhou Q, Yang N, Wei F, Huang S, Zhou M, Zhao T. Neural document summarization by jointly learning to score and select sentences. arXiv preprint arXiv:1807.02305. 2018 Jul 6.
+
+Liu Y, Lapata M. Text Summarization with Pretrained Encoders. arXiv preprint arXiv:1908.08345. 2019 Aug 22.
