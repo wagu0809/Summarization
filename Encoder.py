@@ -33,14 +33,6 @@ class PositionwiseFeedForward(nn.Module):
 
 class MultiHeadedAttention(nn.Module):
     """
-    Multi-Head Attention module from
-    "Attention is All You Need"
-    :cite:`DBLP:journals/corr/VaswaniSPUJGKP17`.
-
-    Similar to standard `dot` attention but uses
-    multiple attention distributions simulataneously
-    to select relevant items.
-
     Args:
        head_count (int): number of parallel heads
        model_dim (int): the dimension of keys/values/queries,
