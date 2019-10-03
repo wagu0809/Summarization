@@ -25,3 +25,14 @@ Each [CLS] token collects the feature of the sentence next to it.
 Some summarization results of other works:
 (http://nlpprogress.com/english/summarization.html)
 
+References:
+
+Devlin J, Chang MW, Lee K, Toutanova K. Bert: Pre-training of deep bidirectional transformers for language understanding. arXiv preprint arXiv:1810.04805. 2018 Oct 11.
+
+Vaswani A, Shazeer N, Parmar N, Uszkoreit J, Jones L, Gomez AN, Kaiser Ł, Polosukhin I. Attention is all you need. InAdvances in neural information processing systems 2017 (pp. 5998-6008).
+
+Lin CY. Rouge: A package for automatic evaluation of summaries. InText summarization branches out 2004 (pp. 74-81).
+
+Ba JL, Kiros JR, Hinton GE. Layer normalization. arXiv preprint arXiv:1607.06450. 2016 Jul 21.
+
+Zhou Q, Yang N, Wei F, Huang S, Zhou M, Zhao T. Neural document summarization by jointly learning to score and select sentences. arXiv preprint arXiv:1807.02305. 2018 Jul 6.
