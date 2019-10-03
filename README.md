@@ -22,7 +22,7 @@ Different with BERT, to represent each individual sentence, [CLS] token is added
 Each [CLS] token collects the feature of the sentence next to it.
 [![tokens.png](https://i.postimg.cc/Hn7W3gLr/tokens.png)](https://postimg.cc/y3szY2cK)
 
-The TransformerEncoder is built by stacking several Transformer layers.
+The Summarization layers are changed to TransformerEncoder which is built by stacking several Transformer layers.
 
 The final layer is softmax which predicts which sentence should be selected as summary.
 
