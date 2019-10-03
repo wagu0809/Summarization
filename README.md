@@ -16,7 +16,8 @@ in ./logs, train_log, validate_log and test_log are saved
 Pre-processed data(https://drive.google.com/open?id=1DN7ClZCCXsk2KegmC6t4ClBwtAf5galI)
 
 Data description:
-Different with BERT(token and sentence level), to obtain document level representation, [CLS] token is added to the beginning of each sentence.
+Different with BERT(token and sentence level), to obtain document level representation, [CLS] token is added to the beginning and [SEP] to the end of each sentence.
+
 
 Some summarization results of other works:
 (http://nlpprogress.com/english/summarization.html)
