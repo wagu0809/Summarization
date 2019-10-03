@@ -90,8 +90,6 @@ class Trainer(object):
         self.loss = torch.nn.BCELoss(reduction='none')  # Binary Cross Entropy
         assert grad_accum_count > 0
         # Set model in training mode.
-        if model:
-            self.model.train()
 
     def train(self, train_iter_fct, train_steps, valid_iter_fct=None, valid_steps=-1):
         """
@@ -113,7 +111,8 @@ class Trainer(object):
         """
         logger.info('Start training...')
         print('Start training...')
-
+        if self.model:
+            self.model.train()
         step = self.optim._step + 1
         true_batchs = []
         normalization = 0
@@ -124,7 +123,6 @@ class Trainer(object):
         self._start_report_manager(start_time=total_stats.start_time)
 
         while step <= train_steps:
-            print(f"training step: {step}")
             reduce_counter = 0
             epoch_loss = 0
             for i, batch in enumerate(train_iter):
@@ -161,11 +159,13 @@ class Trainer(object):
             :obj:`nmt.Statistics`: validation loss statistics
         """
         # Set model in validating mode.
-        self.model.eval()
+        if self.model:
+            self.model.train()
         stats = Statistics()
 
         with torch.no_grad():
-            for batch in valid_iter:
+            for i, batch in enumerate(valid_iter):
+
                 src = batch.src
                 labels = batch.src_sent_labels
                 segs = batch.segs
@@ -179,6 +179,8 @@ class Trainer(object):
                 loss = (loss * mask.float()).sum()
                 batch_stats = Statistics(float(loss.cpu().data.numpy()), len(labels))
                 stats.update(batch_stats)
+                print(f"batch {i} is finished with loss {loss}")
+
             self._report_step(0, step, valid_stats=stats)
             return stats
 
@@ -189,7 +191,6 @@ class Trainer(object):
             :obj:`nmt.Statistics`: validation loss statistics
         """
 
-        # Set model in validating mode.
         def _get_ngrams(n, text):
             ngram_set = set()
             text_length = len(text)
@@ -206,14 +207,14 @@ class Trainer(object):
                     return True
             return False
 
-        if not cal_lead and not cal_oracle:
+        if self.model:
             self.model.eval()
         stats = Statistics()
 
         can_path = '%s_step%d.candidate' % (self.args.result_path, step)
         gold_path = '%s_step%d.gold' % (self.args.result_path, step)
-        with open(can_path, 'w') as save_pred:
-            with open(gold_path, 'w') as save_gold:
+        with open(can_path, 'w', encoding='utf-8') as save_pred:
+            with open(gold_path, 'w', encoding='utf-8') as save_gold:
                 with torch.no_grad():
                     for batch in test_iter:
                         src = batch.src
@@ -245,7 +246,7 @@ class Trainer(object):
                         # selected_ids = np.sort(selected_ids,1)
                         for i, idx in enumerate(selected_ids):
                             _pred = []
-                            if (len(batch.src_str[i]) == 0):
+                            if len(batch.src_str[i]) == 0:
                                 continue
                             for j in selected_ids[i][:len(batch.src_str[i])]:
                                 if j >= len(batch.src_str[i]):
@@ -271,7 +272,7 @@ class Trainer(object):
                             save_gold.write(gold[i].strip() + '\n')
                         for i in range(len(pred)):
                             save_pred.write(pred[i].strip() + '\n')
-        if (step != -1 and self.args.report_rouge):
+        if step != -1 and self.args.report_rouge:
             rouges = test_rouge(self.args.temp_dir, can_path, gold_path)
             logger.info('Rouges at step %d \n%s' % (step, rouge_results_to_str(rouges)))
         self._report_step(0, step, valid_stats=stats)
