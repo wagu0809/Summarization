@@ -18,7 +18,9 @@ Pre-processed data(https://drive.google.com/open?id=1DN7ClZCCXsk2KegmC6t4ClBwtAf
 Data description:
 
 Different with BERT, to represent each individual sentence, [CLS] token is added to the beginning and [SEP] to the end of each sentence and also segment embeddings, position embeddings are added.
-[![tokens.png](https://i.postimg.cc/Hn7W3gLr/tokens.png)](https://postimg.cc/y3szY2cK)
+
+Each [CLS] token collects the feature of the sentence next to it.
+[![20191004004556.png](https://i.postimg.cc/c4FZYChF/20191004004556.png)](https://postimg.cc/9rwvHWv9)
 
 Some summarization results of other works:
 (http://nlpprogress.com/english/summarization.html)
