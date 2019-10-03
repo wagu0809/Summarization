@@ -9,45 +9,18 @@ from subprocess import check_output
 from tempfile import mkdtemp
 from functools import partial
 
-from configparser import ConfigParser
+try:
+    from configparser import ConfigParser
+except ImportError:
+    from ConfigParser import ConfigParser
 
 from pyrouge.utils import log
+from pyrouge.utils.file_utils import DirectoryProcessor
 from pyrouge.utils.file_utils import verify_dir
 
 
 REMAP = {"-lrb-": "(", "-rrb-": ")", "-lcb-": "{", "-rcb-": "}",
          "-lsb-": "[", "-rsb-": "]", "``": '"', "''": '"'}
-
-
-def clean(x):
-    return re.sub(
-            r"-lrb-|-rrb-|-lcb-|-rcb-|-lsb-|-rsb-|``|''",
-            lambda m: REMAP.get(m.group()), x)
-
-
-class DirectoryProcessor:
-
-    @staticmethod
-    def process(input_dir, output_dir, function):
-        """
-        Apply function to all files in input_dir and save the resulting ouput
-        files in output_dir.
-
-        """
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
-        logger = log.get_global_console_logger()
-        logger.info("Processing files in {}.".format(input_dir))
-        input_file_names = os.listdir(input_dir)
-        for input_file_name in input_file_names:
-            input_file = os.path.join(input_dir, input_file_name)
-            with codecs.open(input_file, "r", encoding="UTF-8") as f:
-                input_string = f.read()
-            output_string = function(input_string)
-            output_file = os.path.join(output_dir, input_file_name)
-            with codecs.open(output_file, "w", encoding="UTF-8") as f:
-                f.write(clean(output_string.lower()))
-        logger.info("Saved processed files to {}.".format(output_dir))
 
 
 class Rouge155(object):
@@ -102,7 +75,7 @@ class Rouge155(object):
 
     """
 
-    def __init__(self, rouge_dir=None, rouge_args=None, temp_dir = None):
+    def __init__(self, rouge_dir=None, rouge_args=None, temp_dir=None):
         """
         Create a Rouge155 object.
 
@@ -112,7 +85,7 @@ class Rouge155(object):
                         arguments.
 
         """
-        self.temp_dir=temp_dir
+        self.temp_dir = temp_dir
         self.log = log.get_global_console_logger()
         self.__set_dir_properties()
         self._config_file = None
@@ -365,6 +338,8 @@ class Rouge155(object):
         self.write_config(system_id=system_id)
         options = self.__get_options(rouge_args)
         command = [self._bin_path] + options
+         # inserting a 'perl' command is to run the pyrouge command on windows by perl
+        command.insert(0, 'perl ')
         self.log.info(
             "Running ROUGE with command {}".format(" ".join(command)))
         rouge_output = check_output(command).decode("UTF-8")
