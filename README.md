@@ -16,5 +16,6 @@ in ./logs, train_log, validate_log and test_log are saved
 Pre-processed data(https://drive.google.com/open?id=1DN7ClZCCXsk2KegmC6t4ClBwtAf5galI)
 
 
-
+Some summarization results of other works:
+(http://nlpprogress.com/english/summarization.html)
 
